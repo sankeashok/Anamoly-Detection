@@ -1,14 +1,9 @@
 from flask import Flask, request, jsonify
-from prometheus_flask_exporter import PrometheusMetrics
 import joblib
 import pandas as pd
 import numpy as np
 
 app = Flask(__name__)
-metrics = PrometheusMetrics(app)
-
-# static information as metric
-metrics.info('app_info', 'Network Anomaly Detection API', version='1.0.0')
 
 # Load model and preprocessing artifacts
 model = joblib.load('network_anomaly_model.pkl')
