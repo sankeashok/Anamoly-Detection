@@ -23,45 +23,44 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Get data from request
         data = request.get_json()
-        if not data:
-            return jsonify({"error": "No input data provided"}), 400
         
-        # Convert to DataFrame
+        # Convert JSON to DataFrame
         input_df = pd.DataFrame([data])
         
-        # Ensure all required features are present
-        missing_cols = set(feature_names) - set(input_df.columns)
-        if missing_cols:
-            return jsonify({"error": f"Missing features: {list(missing_cols)}"}), 400
+        # Ensure all required features are present (fill missing with 0)
+        for col in feature_names:
+            if col not in input_df.columns:
+                if col in le_dict:
+                    input_df[col] = le_dict[col].classes_[0]
+                else:
+                    input_df[col] = 0.0
         
         # Reorder columns to match training
         input_df = input_df[feature_names]
         
-        # Encode categorical features
+        # Encode categorical variables
         for col, le in le_dict.items():
             if col in input_df.columns:
-                # Handle unseen labels by mapping them to a default or the first seen label
-                # In a production app, we'd handle this more robustly
-                input_df[col] = input_df[col].apply(lambda x: le.transform([x])[0] if x in le.classes_ else -1)
+                input_df[col] = le.transform(input_df[col])
         
-        # Scale features
+        # Scale numerical features
         input_scaled = scaler.transform(input_df)
         
         # Make prediction
-        prediction = model.predict(input_scaled)
-        prediction_prob = model.predict_proba(input_scaled)
+        prediction = model.predict(input_scaled)[0]
+        prediction_prob = model.predict_proba(input_scaled)[0]
         
         result = {
-            "prediction": "anomaly" if int(prediction[0]) == 1 else "normal",
-            "confidence": float(np.max(prediction_prob[0]))
+            'prediction': int(prediction),
+            'prediction_label': 'anomaly' if prediction == 1 else 'normal',
+            'confidence': float(np.max(prediction_prob))
         }
         
         return jsonify(result)
     
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({'error': str(e)}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(host='0.0.0.0', port=5000)
