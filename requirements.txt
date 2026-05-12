@@ -12,3 +12,6 @@ gunicorn
 mlflow
 dagshub
 prometheus_flask_exporter
+# UI & Dashboards
+streamlit
+plotly
