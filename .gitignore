@@ -5,12 +5,4 @@ scratch/
 venv/
 *.docx
 ~$*
-
-# Planning and AI-trace files
-implementation_plan.md
-task.md
-Loom_Video_Script.md
-Technical_Blog_Draft.md
-PortfolioInstructions.md
-Tableau_Dashboard_Guide.md
-implementation_plan 2
+# Planning files are NOT ignored for this personal repo
