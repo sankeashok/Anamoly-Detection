@@ -1,5 +1,7 @@
 # Network Anomaly Detection System
 
+![Thumbnail](thumbnail.png)
+
 ## 📌 Problem Statement
 In the modern digital landscape, network security is paramount. Cybersecurity threats such as DDoS attacks, malware, and unauthorized access attempts pose significant risks to organizational infrastructure. This project focuses on building an intelligent **Network Anomaly Detection System** that utilizes Machine Learning to identify and flag suspicious network connections in real-time.
 
@@ -62,7 +64,7 @@ The system is deployed using a **Flask API**, allowing it to be integrated into 
 ---
 
 ## 📝 Technical Blog
-A detailed 2000-word technical walkthrough of this project is available here: **[Link to Blog (Drafted)]**
+A detailed 2000-word technical walkthrough of this project is available here: **[Securing the Digital Perimeter (Medium)](https://medium.com/@sanke.ashok/securing-the-digital-perimeter-a-deep-dive-into-network-anomaly-detection-using-machine-learning-a2381023f575)**
 
 ---
 
